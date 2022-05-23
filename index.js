@@ -1,6 +1,7 @@
-// import express and express-ejs-layouts
+// import express, express-ejs-layouts, and fs
 const express = require('express')
 const ejsLayouts = require('express-ejs-layouts')
+const fs = require('fs')
 // creating an instance of an express app
 const app = express()
 
@@ -13,6 +14,13 @@ app.use(ejsLayouts)
 // HOME ROUTE
 app.get('/', (req, res)=>{
     res.render('home.ejs')
+})
+
+// INDEX ROUTE
+app.get('/dinosaurs', (req, res)=>{
+    let dinosaurs = fs.readFileSync('./dinosaurs.json')
+    let dinoData = JSON.parse(dinosaurs)
+    res.render('dinosaurs/index.ejs', {myDinos: dinoData})
 })
 
 app.listen(8000, ()=>{
