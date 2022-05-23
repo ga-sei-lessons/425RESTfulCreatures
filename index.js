@@ -23,6 +23,11 @@ app.get('/dinosaurs', (req, res)=>{
     res.render('dinosaurs/index.ejs', {myDinos: dinoData})
 })
 
+// NEW DINO FORM ROUTE
+app.get('/dinosaurs/new', (req, res)=>{
+    res.render('dinosaurs/new.ejs')
+})
+
 // SHOW ROUTE (a specific dinosaur)
 app.get('/dinosaurs/:id', (req, res)=>{
     // get the array of dinos from the json
@@ -35,6 +40,7 @@ app.get('/dinosaurs/:id', (req, res)=>{
     // console.log(dinoData[dinoIndex])
     res.render('dinosaurs/show.ejs', {myDino: dinoData[dinoIndex]})
 })
+
 
 app.listen(8000, ()=>{
     console.log('cruddy dinos on port 8000')
