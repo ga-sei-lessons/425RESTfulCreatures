@@ -23,6 +23,19 @@ app.get('/dinosaurs', (req, res)=>{
     res.render('dinosaurs/index.ejs', {myDinos: dinoData})
 })
 
+// SHOW ROUTE (a specific dinosaur)
+app.get('/dinosaurs/:id', (req, res)=>{
+    // get the array of dinos from the json
+    let dinosaurs = fs.readFileSync('./dinosaurs.json')
+    let dinoData = JSON.parse(dinosaurs)
+    // identify the index of the dino in question
+    let dinoIndex = req.params.id
+    console.log(`The dino you\'re searching for is ${dinoIndex}`)
+    // isolate the dino in question
+    // console.log(dinoData[dinoIndex])
+    res.render('dinosaurs/show.ejs', {myDino: dinoData[dinoIndex]})
+})
+
 app.listen(8000, ()=>{
     console.log('cruddy dinos on port 8000')
 })
