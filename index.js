@@ -10,6 +10,8 @@ const app = express()
 app.set('view engine', 'ejs')
 // tell my app that I'm using ejs layouts
 app.use(ejsLayouts)
+// body parser middleware
+app.use(express.urlencoded({extended: false}))
 
 // HOME ROUTE
 app.get('/', (req, res)=>{
@@ -41,6 +43,21 @@ app.get('/dinosaurs/:id', (req, res)=>{
     res.render('dinosaurs/show.ejs', {myDino: dinoData[dinoIndex]})
 })
 
+// POST A NEW DINO ROUTE
+app.post('/dinosaurs', (req, res)=>{
+    // get the array of dinos from the json
+    let dinosaurs = fs.readFileSync('./dinosaurs.json')
+    let dinoData = JSON.parse(dinosaurs)
+
+    // add the new dino to the array
+    dinoData.push(req.body)
+
+    // save the dinosaurs to the json file
+    fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinoData))
+
+    // redirect to the index route
+    res.redirect('/dinosaurs')
+})
 
 app.listen(8000, ()=>{
     console.log('cruddy dinos on port 8000')
